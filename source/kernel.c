@@ -17,9 +17,7 @@
 
 void kmain(void)
 {
-    vga_write_regs(g_320x200x256);
-    kcvs_initialize();
-    kcvs_clear(VGA_COLOR_WHITE);
+    kcls_initialize();
 
     kheap_initialize();
 
