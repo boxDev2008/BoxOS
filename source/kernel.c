@@ -17,7 +17,7 @@
 
 void kmain(void)
 {
-    kcls_initialize();
+    kcsl_initialize();
 
     kheap_initialize();
 
