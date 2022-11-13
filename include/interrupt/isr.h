@@ -23,7 +23,6 @@ typedef struct
     uint16_t dx;
     uint16_t cx;
     uint16_t ax;
-
     
     uint16_t ds;
     uint16_t es;

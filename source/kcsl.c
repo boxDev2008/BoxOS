@@ -2,6 +2,10 @@
 #include <vga.h>
 #include <string.h>
 
+#define CONSOLE_WIDTH 90
+#define CONSOLE_HEIGHT 30
+#define CONSOLE_SIZE (CONSOLE_WIDTH * CONSOLE_HEIGHT)
+
 typedef struct
 {
     uint16_t row, column;
@@ -19,7 +23,7 @@ void kcsl_initialize(void)
 	kcsl.color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
 	kcsl.buffer = (uint16_t*)0xB8000;
 
-    memset(kcsl.buffer, 0, 80 * 25 * 2);
+    memset(kcsl.buffer, 0, CONSOLE_SIZE * 2);
 }
 
 void kcsl_set_color(uint8_t color) 
@@ -54,7 +58,7 @@ uint16_t kcsl_get_row(void)
 
 void kcsl_set_cursor_position(uint8_t x, uint8_t y)
 {
-	uint16_t pos = y * 80 + x;
+	uint16_t pos = y * CONSOLE_WIDTH + x;
 
 	outportb(0x3D4, 0x0F);
 	outportb(0x3D5, (uint8_t) (pos & 0xFF));
@@ -64,15 +68,15 @@ void kcsl_set_cursor_position(uint8_t x, uint8_t y)
 
 void kcsl_putentryat(char c, uint8_t color, uint16_t x, uint16_t y)
 {
-	const uint32_t index = y * 80 + x;
+	const uint32_t index = y * CONSOLE_WIDTH + x;
 	kcsl.buffer[index] = vga_entry(c, color);
 }
 
 void kputchar(char c)
 {
-    if (kcsl.row > 25)
+    if (kcsl.row > CONSOLE_HEIGHT)
     {
-        memset(kcsl.buffer, 0, 80 * 25 * 2);
+        memset(kcsl.buffer, 0, CONSOLE_SIZE * 2);
         kcsl.row = 0;
     }
 
@@ -86,10 +90,10 @@ void kputchar(char c)
 
 	kcsl_putentryat(c, kcsl.color, kcsl.column, kcsl.row);
 
-	if (++kcsl.column == 80)
+	if (++kcsl.column == CONSOLE_WIDTH)
     {
 		kcsl.column = 0;
-		if (++kcsl.row == 25)
+		if (++kcsl.row == CONSOLE_HEIGHT)
 			kcsl.row = 0;
 	}
 }

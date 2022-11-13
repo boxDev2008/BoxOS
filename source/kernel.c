@@ -17,7 +17,10 @@
 
 void kmain(void)
 {
+    vga_write_regs(g_90x30_text);
     kcsl_initialize();
+    //kcvs_initialize();
+    //kcvs_clear(VGA_COLOR_BLACK);
 
     kheap_initialize();
 
