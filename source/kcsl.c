@@ -112,14 +112,15 @@ void kputchar(char ch)
 
 void kprintf(const char *format, ...)
 {
-    char **arg = (char **)&format;
+    char **arg = (char**)&format;
     int c;
     char buf[32];
 
     arg++;
 
     memset(buf, 0, sizeof(buf));
-    while ((c = *format++) != 0) {
+    while ((c = *format++) != 0)
+    {
         if (c != '%')
             kputchar(c);
         else {
@@ -127,17 +128,20 @@ void kprintf(const char *format, ...)
             int pad0 = 0, pad = 0;
 
             c = *format++;
-            if (c == '0') {
+            if (c == '0')
+            {
                 pad0 = 1;
                 c = *format++;
             }
 
-            if (c >= '0' && c <= '9') {
+            if (c >= '0' && c <= '9')
+            {
                 pad = c - '0';
                 c = *format++;
             }
 
-            switch (c) {
+            switch (c)
+            {
                 case 'd':
                 case 'u':
                 case 'x':
