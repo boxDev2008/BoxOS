@@ -19,6 +19,7 @@ void kmain(void)
 {
     vga_write_regs(g_90x30_text);
     kcsl_initialize();
+    
     //kcvs_initialize();
     //kcvs_clear(VGA_COLOR_BLACK);
 
@@ -27,13 +28,18 @@ void kmain(void)
     gdt_initialize();
     idt_initialize();
 
-    kprintf("|--\\\\\n");
-    kprintf("|  ||    /---\\    \\\\  //\n");
-    kprintf("|--<    /     \\    \\\\//\n");
-    kprintf("|  ||   \\     /    /\\\\\n");
-    kprintf("|--//    \\---/    // \\\\     OS\n");
+    kprintf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n",
+        "    /\\_____/\\",
+        "   /         \\           Welcome to",
+        "  (  x  w  x  )            BOX OS",
+        "   ) =     = (",
+        "  (           )   Type \"help pls\" for help",
+        " (             )",
+        "(__(__)___(__)__)");
 
     timer_initialize(1);
+
+    kshell_initialize();
 
     keyboard_initialize();
     mouse_initialize();

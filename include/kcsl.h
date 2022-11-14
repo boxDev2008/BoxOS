@@ -15,6 +15,8 @@ uint16_t kcsl_get_row(void);
 void kcsl_set_cursor_position(uint8_t x, uint8_t y);
 
 void kcsl_putentryat(char c, uint8_t color, uint16_t x, uint16_t y);
+void kcsl_backspace(void);
+void kcsl_clear(void);
 
 void kputchar(char c);
 void kprintf(const char *format, ...);

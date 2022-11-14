@@ -35,7 +35,8 @@ OBJECTS  =	$(OBJ)/kernel.o\
 			$(OBJ)/kheap.o\
 			$(OBJ)/timer.o\
 			$(OBJ)/keyboard.o\
-			$(OBJ)/mouse.o
+			$(OBJ)/mouse.o\
+			$(OBJ)/kshell.o
 
 all: 	boot\
 		kernel\
@@ -62,6 +63,7 @@ kernel:
 	$(CC) -w $(C_FLAGS) $(SOURCE)/kcvs.c -o $(OBJ)/kcvs.o -I$(INCLUDE)
 
 	$(CC) -w $(C_FLAGS) $(SOURCE)/timer.c -o $(OBJ)/timer.o -I$(INCLUDE)
+	$(CC) -w $(C_FLAGS) $(SOURCE)/kshell.c -o $(OBJ)/kshell.o -I$(INCLUDE)
 
 interrupt:
 	$(CC) -w $(C_FLAGS) $(SOURCE)/interrupt/8259_pic.c -o $(OBJ)/8259_pic.o -I$(INCLUDE)
