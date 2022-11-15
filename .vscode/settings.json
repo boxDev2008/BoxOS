@@ -9,6 +9,11 @@
         "kheap.h": "c",
         "mouse.h": "c",
         "ide.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "gdt.h": "c",
+        "idt.h": "c",
+        "bios32.h": "c",
+        "isr.h": "c",
+        "vesa.h": "c"
     }
 }

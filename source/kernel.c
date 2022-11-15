@@ -46,10 +46,4 @@ void kmain(void)
     mouse_initialize();
 
     ata_initialize();
-    ide_write_sectors(0, 1, 0, "");
-
-    char buffer[1028];
-    ide_read_sectors(0, 1, 0, buffer);
-
-    kprintf("\n%s\n", buffer);
 }

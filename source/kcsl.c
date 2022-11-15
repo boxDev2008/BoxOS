@@ -20,7 +20,7 @@ void kcsl_initialize(void)
 {
     kcsl.row = 0;
 	kcsl.column = 0;
-	kcsl.color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+	kcsl.color = VGA_COLOR_LIGHT_GREY;
 	kcsl.buffer = (uint16_t*)0xB8000;
 
     kcsl_clear();
@@ -84,23 +84,42 @@ void kcsl_clear(void)
         kcsl.buffer[i] = vga_entry(0x20, vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
 }
 
+void kcsl_scroll(void)
+{
+    memmove(kcsl.buffer, kcsl.buffer + CONSOLE_WIDTH, CONSOLE_WIDTH * (CONSOLE_HEIGHT - 1) * sizeof(uint16_t));
+
+    size_t index = (CONSOLE_HEIGHT - 1) * CONSOLE_WIDTH;
+    for(size_t x = 0; x < CONSOLE_WIDTH; ++x)
+        kcsl.buffer[index + x] = vga_entry(' ', vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
+}
+
 void kputchar(char ch)
 {
-    if (kcsl.row >= CONSOLE_HEIGHT)
-    {
-        kcsl_clear();
-        kcsl.row = 0;
-    }
-
     if (ch == '\n')
     {
 		kcsl.column = 0;
 		kcsl.row++;
+
+        if (kcsl.row >= CONSOLE_HEIGHT)
+        {
+            kcsl_scroll();
+
+            kcsl.column = 0;
+            kcsl.row--;
+        }
         
         return;
     }
 
-	kcsl_putentryat(ch, kcsl.color, kcsl.column, kcsl.row);
+    if (kcsl.row >= CONSOLE_HEIGHT)
+    {
+        kcsl_scroll();
+
+		kcsl.column = 0;
+        kcsl.row--;
+    }
+
+	kcsl_putentryat(ch, vga_entry_color(kcsl.color, VGA_COLOR_BLACK), kcsl.column, kcsl.row);
 
 	if (++kcsl.column == CONSOLE_WIDTH)
     {

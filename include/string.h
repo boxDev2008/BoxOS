@@ -14,6 +14,8 @@ void *memcpy(void *dst, const void *src, uint32_t n);
 
 int memcmp(uint8_t *s1, uint8_t *s2, uint32_t n);
 
+void *memmove(void *dest, void *src, size_t n);
+
 bool strncmp(char *a, char *b, uint32_t n); 
 
 int strlen(const char *s);
