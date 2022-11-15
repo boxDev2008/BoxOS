@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "kcvs.h": "c",
+        "io_ports.h": "c",
+        "kcsl.h": "c",
+        "fs.h": "c",
+        "ext2.h": "c",
+        "kheap.h": "c",
+        "mouse.h": "c",
+        "ide.h": "c",
+        "stdint.h": "c"
+    }
+}

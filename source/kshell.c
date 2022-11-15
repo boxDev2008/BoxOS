@@ -3,11 +3,15 @@
 #include <kcsl.h>
 #include <string.h>
 
+#include <drivers/ide.h>
+
 #define MAX_SHELL_BUFFER_SIZE 256
 
 typedef struct
 {
     char buffer[MAX_SHELL_BUFFER_SIZE];
+    char *user;
+    char *host;
 }
 shell_t;
 
@@ -15,9 +19,17 @@ shell_t shell;
 
 void kshell_initialize(void)
 {
-    char *user = "user";
-    char *host = "boxos";
-    kprintf("%s@%s $ ", user, host);
+    shell.user = "user";
+    shell.host = "boxos";
+    
+    kcsl_set_color(VGA_COLOR_LIGHT_GREEN);
+    kprintf("%s", shell.user);
+    kcsl_set_color(VGA_COLOR_LIGHT_CYAN);
+    kprintf("@");
+    kcsl_set_color(VGA_COLOR_LIGHT_GREEN);
+    kprintf("%s", shell.host);
+    kprintf("$ ");
+    kcsl_set_color(VGA_COLOR_LIGHT_GREY);
 
     kcsl_set_cursor_position(kcsl_get_column(), kcsl_get_row());
 }
@@ -53,7 +65,7 @@ void kshell_execute_command(void)
 {
     if (strlen(shell.buffer) <= 0)
         return;
-    else if (strcmp(shell.buffer, "help pls") == 0)
+    else if (strcmp(shell.buffer, "help") == 0)
     {
         kprintf("\nyes uwu\n");
     }
@@ -64,6 +76,8 @@ void kshell_execute_command(void)
         kcsl_set_column(0);
         kcsl_set_row(0);
     }
+    else if(strcmp(shell.buffer, "list disks") == 0)
+        ide_print_drive_info();
     else
     {
         kprintf("\nInvalid command ");
@@ -74,9 +88,14 @@ void kshell_execute_command(void)
 
     shell.buffer[0] = '\0';
     
-    char *user = "user";
-    char *host = "boxos";
-    kprintf("%s@%s $ ", user, host);
+    kcsl_set_color(VGA_COLOR_LIGHT_GREEN);
+    kprintf("%s", shell.user);
+    kcsl_set_color(VGA_COLOR_LIGHT_CYAN);
+    kprintf("@");
+    kcsl_set_color(VGA_COLOR_LIGHT_GREEN);
+    kprintf("%s", shell.host);
+    kprintf("$ ");
+    kcsl_set_color(VGA_COLOR_LIGHT_GREY);
 
     kcsl_set_cursor_position(kcsl_get_column(), kcsl_get_row());
 }

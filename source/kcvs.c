@@ -1,3 +1,4 @@
+#include <kcvs.h>
 #include <string.h>
 
 #define CANVAS_WIDTH 320

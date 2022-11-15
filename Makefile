@@ -17,8 +17,8 @@ BIN = bin
 
 ASM_OBJECTS  =	$(ASM_OBJ)/entry.o\
 				$(ASM_OBJ)/exception.o\
-				$(ASM_OBJ)/load_gdt.o\
 				$(ASM_OBJ)/irq.o\
+				$(ASM_OBJ)/load_gdt.o\
 				$(ASM_OBJ)/load_idt.o
 
 OBJECTS  =	$(OBJ)/kernel.o\
@@ -34,6 +34,7 @@ OBJECTS  =	$(OBJ)/kernel.o\
 			$(OBJ)/dalloc.o\
 			$(OBJ)/kheap.o\
 			$(OBJ)/timer.o\
+			$(OBJ)/ide.o\
 			$(OBJ)/keyboard.o\
 			$(OBJ)/mouse.o\
 			$(OBJ)/kshell.o
@@ -45,11 +46,13 @@ all: 	boot\
 		drivers\
 		link
 
+		grub-mkrescue -o boxos.iso bin
+
 boot:
 	$(ASM) $(ASM_FLAGS) $(SOURCE)/asm/entry.asm -o $(ASM_OBJ)/entry.o
 	$(ASM) $(ASM_FLAGS) $(SOURCE)/asm/exception.asm -o $(ASM_OBJ)/exception.o
-	$(ASM) $(ASM_FLAGS) $(SOURCE)/asm/load_gdt.asm -o $(ASM_OBJ)/load_gdt.o
 	$(ASM) $(ASM_FLAGS) $(SOURCE)/asm/irq.asm -o $(ASM_OBJ)/irq.o
+	$(ASM) $(ASM_FLAGS) $(SOURCE)/asm/load_gdt.asm -o $(ASM_OBJ)/load_gdt.o
 	$(ASM) $(ASM_FLAGS) $(SOURCE)/asm/load_idt.asm -o $(ASM_OBJ)/load_idt.o
 
 kernel:
@@ -62,7 +65,6 @@ kernel:
 	$(CC) -w $(C_FLAGS) $(SOURCE)/kcsl.c -o $(OBJ)/kcsl.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/kcvs.c -o $(OBJ)/kcvs.o -I$(INCLUDE)
 
-	$(CC) -w $(C_FLAGS) $(SOURCE)/timer.c -o $(OBJ)/timer.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/kshell.c -o $(OBJ)/kshell.o -I$(INCLUDE)
 
 interrupt:
@@ -78,6 +80,8 @@ memory:
 drivers:
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/keyboard.c -o $(OBJ)/keyboard.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/mouse.c -o $(OBJ)/mouse.o -I$(INCLUDE)
+	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/timer.c -o $(OBJ)/timer.o -I$(INCLUDE)
+	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/ide.c -o $(OBJ)/ide.o -I$(INCLUDE)
 
 link:
 	$(LD) $(LD_FLAGS) -T linker.ld -o $(BIN)/boot/boxos.bin $(ASM_OBJECTS) $(OBJECTS)
