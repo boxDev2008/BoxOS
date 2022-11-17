@@ -35,6 +35,8 @@ void kmain(void)
     gdt_initialize();
     idt_initialize();
 
+    bios32_initialize();
+
     vesa_initialize(1280, 1024, 32);
 
     keyboard_initialize();
@@ -50,10 +52,6 @@ void kmain(void)
     while (1)
     {
         vbe_clear_backbuffer();
-
-        /*for (int i = 0; i < 1280; i++)
-                for (int j = 0; j < 1024; j++)
-                    vbe_putpixel(i, j, VBE_RGB(26,26,26));*/
 
         for (int i = 0; i < 255; i++)
             for (int j = 0; j < 255; j++)
@@ -77,7 +75,7 @@ void kmain(void)
         for (int x = 0; x < 8; x++)
             for (int y = 0; y < 8; y++)
                 if (mouse_bitmap[x + y * 8] == 1)
-                    vbe_putpixel((int)mouse_get_x() + x, (int)mouse_get_y() + y, VBE_RGB(255, 255, 255));   
+                    vbe_putpixel((int)mouse_get_x() + x, (int)mouse_get_y() + y, VBE_RGB(255, 255, 255));
 
         vbe_swapbuffers();
     }

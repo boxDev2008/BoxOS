@@ -49,7 +49,3 @@ _start:
     mov esp, stack_top
     extern kmain
     call kmain
-    jmp _loop
-
-_loop:
-    jmp _loop

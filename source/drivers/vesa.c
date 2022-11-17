@@ -170,9 +170,7 @@ void vbe_draw_string(const char *str, int x, int y, int color)
 }
 
 int vesa_initialize(uint32_t width, uint32_t height, uint32_t bpp)
-{
-    bios32_initialize();
-    
+{    
     if (!get_vbe_info())
         return -1;
 
