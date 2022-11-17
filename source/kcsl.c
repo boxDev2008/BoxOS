@@ -1,6 +1,7 @@
 #include <kcsl.h>
-#include <vga.h>
 #include <string.h>
+
+#include <drivers/vga.h>
 
 #define CONSOLE_WIDTH 90
 #define CONSOLE_HEIGHT 30

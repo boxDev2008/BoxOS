@@ -1,8 +1,8 @@
 #include <kshell.h>
-#include <vga.h>
 #include <kcsl.h>
 #include <string.h>
 
+#include <drivers/vga.h>
 #include <drivers/ide.h>
 
 #define MAX_SHELL_BUFFER_SIZE 256

@@ -14,6 +14,11 @@
         "idt.h": "c",
         "bios32.h": "c",
         "isr.h": "c",
-        "vesa.h": "c"
+        "vesa.h": "c",
+        "timer.h": "c",
+        "fonts.h": "c",
+        "bitmap.h": "c",
+        "wallpaper.h": "c",
+        "vga.h": "c"
     }
 }

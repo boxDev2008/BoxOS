@@ -8,8 +8,8 @@
 #include <string.h>
 #include <io_ports.h>
 
-int g_mouse_x_pos = 0, g_mouse_y_pos = 0;
-float mouse_speed = 4;
+float g_mouse_x_pos = 0, g_mouse_y_pos = 0;
+float mouse_speed = 6;
 uint32_t under_mouse_buffer = NULL;
 
 mouse_status_t g_status;
@@ -99,6 +99,8 @@ void print_mouse_info(void)
 void mouse_handler(registers_t *regs)
 {
     static uint8_t mouse_cycle = 0;
+    float prev_mouse_x_pos = g_mouse_x_pos, prev_mouse_y_pos = g_mouse_y_pos;
+
     static char mouse_byte[3];
     switch (mouse_cycle)
     {
@@ -120,10 +122,11 @@ void mouse_handler(registers_t *regs)
                 g_mouse_x_pos = 0;
             if (g_mouse_y_pos < 0)
                 g_mouse_y_pos = 0;
-            if (g_mouse_x_pos > (int)320)
-                g_mouse_x_pos = (int)320 - 1;
-            if (g_mouse_y_pos > (int)200)
-                g_mouse_y_pos = (int)200 - 1;
+
+            if (g_mouse_x_pos > (int)1280)
+                g_mouse_x_pos = (int)1280 - 1;
+            if (g_mouse_y_pos > (int)1024)
+                g_mouse_y_pos = (int)1024 - 1;
             
             mouse_cycle = 0;
             break;
