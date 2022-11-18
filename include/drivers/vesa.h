@@ -80,4 +80,7 @@ void vbe_set_background(int color);
 void vbe_draw_char(char ch, int x, int y, int color);
 void vbe_draw_string(const char *str, int x, int y, int color);
 
+void vbe_draw_rect(int x, int y, int w, int h, int color);
+void vbe_fill_rect(int x, int y, int w, int h, int color);
+
 #define VBE_RGB(r, g, b) vbe_rgb(r, g, b)

@@ -129,6 +129,30 @@ void vbe_set_background(int color)
     g_vbe_background_color = color;
 }
 
+void vbe_draw_rect(int x, int y, int w, int h, int color)
+{
+    int i;
+
+    for (i = 0; i < w; i++)
+    {
+        vbe_putpixel(x + i, y, color);
+        vbe_putpixel(x + i, y + h, color);
+    }
+
+    for (i = 0; i < h; i++)
+    {
+        vbe_putpixel(x, y + i, color);
+        vbe_putpixel(x + w, y + i, color);
+    }
+}
+
+void vbe_fill_rect(int x, int y, int w, int h, int color)
+{
+    for (int xx = 0; xx < w; xx++)
+        for (int yy = 0; yy < h; yy++)
+            vbe_putpixel(x + xx, y + yy, color);
+}
+
 void vbe_draw_char(char ch, int x, int y, int color)
 {
     int temp = 0, pix_data = 0;

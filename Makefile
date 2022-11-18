@@ -39,13 +39,15 @@ OBJECTS  =	$(OBJ)/kernel.o\
 			$(OBJ)/mouse.o\
 			$(OBJ)/kshell.o\
 			$(OBJ)/bios32.o\
-			$(OBJ)/vesa.o
+			$(OBJ)/vesa.o\
+			$(OBJ)/window.o
 
 all: 	boot\
 		kernel\
 		interrupt\
 		memory\
 		drivers\
+		gui\
 		link
 
 		grub-mkrescue -o boxos.iso bin
@@ -85,6 +87,9 @@ drivers:
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/ide.c -o $(OBJ)/ide.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/vga.c -o $(OBJ)/vga.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/vesa.c -o $(OBJ)/vesa.o -I$(INCLUDE)
+
+gui:
+	$(CC) -w $(C_FLAGS) $(SOURCE)/gui/window.c -o $(OBJ)/window.o -I$(INCLUDE)
 
 link:
 	$(LD) $(LD_FLAGS) -T linker.ld -o $(BIN)/boot/boxos.bin $(ASM_OBJECTS) $(OBJECTS)

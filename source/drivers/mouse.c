@@ -31,7 +31,7 @@ mouse_status_t mouse_get_status(void)
 
 void mouse_wait(bool type)
 {
-    /*uint32_t time_out = 1;
+    /*uint32_t time_out = 100000;
     if (type == false)
     {
         // suspend until status is 1
@@ -122,6 +122,8 @@ void mouse_handler(registers_t *regs)
                 g_mouse_x_pos = 0;
             if (g_mouse_y_pos < 0)
                 g_mouse_y_pos = 0;
+
+            
 
             if (g_mouse_x_pos > (int)1280)
                 g_mouse_x_pos = (int)1280 - 1;
