@@ -1,30 +1,22 @@
 #include <gui/window.h>
-
-#include <mm/kheap.h>
+#include <gui/colors.h>
+#include <gui/colors.h>
 
 #include <drivers/vesa.h>
 
-gui_window_t *create_gui_window(int w, int h)
+#include <stddef.h>
+
+void GUI_Window_Render(GUI_Window *window)
 {
-    gui_window_t *window = (gui_window_t*)kmalloc(sizeof(gui_window_t));
+    if (window->flags & GUI_WINDOW_MINIMIZED)
+        return;
+    
+    VBE_FillRect(window->x, window->y, window->w, window->h, GUI_WINDOW_FILL_COLOR);
+    VBE_DrawRect(window->x, window->y, window->w, window->h, GUI_WINDOW_BORDER_COLOR);
 
-    window->x = 0;
-    window->y = 0;
-    window->w = w;
-    window->h = h;
+    if (window->flags & GUI_WINDOW_ACTIVE)
+        VBE_DrawRect(window->x, window->y, window->w, window->h, GUI_WINDOW_ACTIVE_BORDER_COLOR);
 
-    window->minimized = false;
-
-    return window;
-}
-
-void destroy_gui_window(gui_window_t *window)
-{
-    kfree(window);
-}
-
-void gui_window_update(gui_window_t *window)
-{
-    vbe_fill_rect(window->x, window->y, window->w, window->h, VBE_RGB(41, 44, 53));
-    vbe_draw_rect(window->x, window->y, window->w, window->h, VBE_RGB(34, 36, 38));
+    if (window->on_update_callback != NULL)
+        window->on_update_callback(window);
 }

@@ -11,7 +11,7 @@ typedef struct
     uint32_t int_no, err_code;                        
     uint32_t eip, cs, eflags, useresp, ss;            
 }
-registers_t;
+Registers;
 
 typedef struct
 {
@@ -31,17 +31,17 @@ typedef struct
     uint16_t ss;
     uint16_t eflags;
 }
-registers16_t;
+Registers16;
 
-typedef void (*isr_t)(registers_t*);
+typedef void (*ISR)(Registers*);
 
-void isr_register_interrupt_handler(int num, isr_t handler);
+void ISR_RegisterInterruptHandler(int num, ISR handler);
 
-void isr_end_interrupt(int num);
+void ISR_EndInterrupt(int num);
 
-void isr_exception_handler(registers_t reg);
+void ISR_ExceptionHandler(Registers reg);
 
-void isr_irq_handler(registers_t *reg);
+void ISR_IrqHandler(Registers *reg);
 
 extern void exception_0();
 extern void exception_1();

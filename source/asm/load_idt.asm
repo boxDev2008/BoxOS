@@ -1,7 +1,7 @@
 section .text
-    global load_idt
+    global IDT_Load
 
-load_idt:
+IDT_Load:
     mov eax, [esp + 4]
     lidt [eax]
     ret

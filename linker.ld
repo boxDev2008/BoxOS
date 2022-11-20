@@ -2,7 +2,6 @@ ENTRY(_start)
 
 SECTIONS
 {
-    __kernel_section_start = .;
     /* text section */
     .text 0x0100000 : {
         . = ALIGN(4);
@@ -32,7 +31,7 @@ SECTIONS
     .bss : {
         bss = .; _bss = .; __bss = .;
         *(.bss)
-        . = ALIGN(8294400);
+        . = ALIGN(4096);
     }
 
     end = .; _end = .; __end = .;

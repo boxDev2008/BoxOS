@@ -30,11 +30,11 @@ typedef struct
     uint8_t x_overflow: 1;
     uint8_t y_overflow: 1;
 }
-mouse_status_t;
+MouseStatus;
 
-void mouse_initialize(void);
+void Mouse_Initialize(void);
 
-int mouse_get_x(void);
-int mouse_get_y(void);
+int Mouse_GetX(void);
+int Mouse_GetY(void);
 
-mouse_status_t mouse_get_status(void);
+MouseStatus Mouse_GetStatus(void);

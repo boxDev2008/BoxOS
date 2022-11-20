@@ -15,58 +15,55 @@
 
 #include <drivers/mouse.h>
 #include <drivers/keyboard.h>
-#include <drivers/timer.h>
+#include <drivers/pit.h>
 #include <drivers/ide.h>
+#include <drivers/rtc.h>
 
+#include <gui/gui.h>
 #include <gui/window.h>
+
+DateTime dt;
+
+void on_update_terminal(GUI_Window *window)
+{
+    VBE_DrawString("Welcome to BoxOS!", window->x + 8, window->y + 6, VBE_RGB(200, 200, 200));
+    VBE_DrawString("root@boxos $ ", window->x + 8, window->y + 6 + 18, VBE_RGB(200, 200, 200));
+}
 
 void kmain(void)
 {
-    gdt_initialize();
-    idt_initialize();
+    GDT_Initialize();
+    IDT_Initialize();
 
-    kheap_initialize();
+    Kheap_Initialize();
 
-    bios32_initialize();
+    Bios32_Initialize();
 
-    vesa_initialize(1280, 1024, 32);
+    VBE_InitializeBuffer(1280, 1024, 32);
 
-    keyboard_initialize();
-    mouse_initialize();
-
-    vbe_set_background(VBE_RGB(24, 24, 24));
-
-    gui_window_t *window = create_gui_window(400, 240);
+    Keyboard_Initialize();
+    Mouse_Initialize();
 
     while (1)
     {
-        vbe_clear_backbuffer();
+        //VBE_ClearBackBuffer();
 
-        vbe_draw_string("Welcome to BoxOS!", 1280 / 2, 1024 / 2, VBE_RGB(255, 255, 255));
+        GUI_Render();
 
-        gui_window_update(window);
-
-        for (int x = 0; x < 1280; x++)
-            for (int y = 0; y < 32; y++)
-            {
-                vbe_putpixel(x, 1024 - 32 + y, VBE_RGB(14, 14, 14));
-                vbe_putpixel(x, 1024 - 32, VBE_RGB(42, 42, 42));
-            }
-
-        vbe_swapbuffers();
+        VBE_SwapBuffers();
     }
 
-    destroy_gui_window(window);
+    VBE_FreeBuffer();
 
     //Switch back to VBA
-    /*registers16_t in = {0};
+    /*Registers16 in = {0};
 
     in.ax = 0x4F02;
     in.bx = 0x0;
-    int86(0x10, &in, (registers16_t*){ 0 });*/
+    int86(0x10, &in, (Registers16*){ 0 });*/
 
-    //vga_write_regs(g_90x30_text);
-    //kcsl_initialize();
+    //VGA_WriteRegs(g_90x30_text);
+    //Kcsl_Initialize();
     
     //kcvs_initialize();
     //kcvs_clear(VGA_COLOR_BLACK);
@@ -82,7 +79,7 @@ void kmain(void)
 
     //timer_initialize(1);
 
-    //kshell_initialize();
+    //Kshell_Initialize();
 
-    //ata_initialize();
+    //ATA_Initialize();
 }

@@ -2,14 +2,23 @@
 
 #include <stdbool.h>
 
-typedef struct
+typedef enum
+{
+    GUI_WINDOW_MINIMIZED = 0,
+    GUI_WINDOW_ACTIVE = 1
+}
+GUI_WindowFlags;
+
+typedef struct GUI_Window GUI_Window;
+
+struct GUI_Window
 {
     int x, y, w, h;
-    bool minimized;
-}
-gui_window_t;
+    bool alive;
+    
+    GUI_WindowFlags flags;
 
-gui_window_t *create_gui_window(int w, int h);
-void destroy_gui_window(gui_window_t *window);
+    void (*on_update_callback)(GUI_Window*);
+};
 
-void gui_window_update(gui_window_t *window);
+void GUI_Window_Render(GUI_Window *window);

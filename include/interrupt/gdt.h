@@ -13,18 +13,18 @@ typedef struct
     uint8_t granularity;     
     uint8_t base_high;       
 }
-__attribute__((packed)) gdt_t;
+__attribute__((packed)) GDT;
 
 typedef struct
 {
     uint16_t limit;       
     uint32_t base_address;  
 }
-__attribute__((packed)) gdt_ptr_t;
+__attribute__((packed)) GDT_PTR;
 
 
-extern void load_gdt(uint32_t gdt_ptr);
+extern void GDT_Load(uint32_t gdt_ptr);
 
-void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
+void GDT_SetEntry(int index, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
 
-void gdt_initialize(void);
+void GDT_Initialize(void);

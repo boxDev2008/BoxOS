@@ -1,5 +1,5 @@
 section .text
-    extern isr_irq_handler
+    extern ISR_IrqHandler
 
 irq_handler:
     pusha                 ; push all registers
@@ -13,7 +13,7 @@ irq_handler:
     mov gs, ax
 
     push esp
-    call isr_irq_handler
+    call ISR_IrqHandler
     pop esp
 
     pop ebx                ; restore kernel data segment

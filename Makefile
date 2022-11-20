@@ -33,14 +33,17 @@ OBJECTS  =	$(OBJ)/kernel.o\
 			$(OBJ)/isr.o\
 			$(OBJ)/dalloc.o\
 			$(OBJ)/kheap.o\
-			$(OBJ)/timer.o\
+			$(OBJ)/pit.o\
 			$(OBJ)/ide.o\
 			$(OBJ)/keyboard.o\
 			$(OBJ)/mouse.o\
 			$(OBJ)/kshell.o\
 			$(OBJ)/bios32.o\
 			$(OBJ)/vesa.o\
-			$(OBJ)/window.o
+			$(OBJ)/rtc.o\
+			$(OBJ)/window.o\
+			$(OBJ)/button.o\
+			$(OBJ)/gui.o
 
 all: 	boot\
 		kernel\
@@ -83,13 +86,16 @@ memory:
 drivers:
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/keyboard.c -o $(OBJ)/keyboard.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/mouse.c -o $(OBJ)/mouse.o -I$(INCLUDE)
-	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/timer.c -o $(OBJ)/timer.o -I$(INCLUDE)
+	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/pit.c -o $(OBJ)/pit.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/ide.c -o $(OBJ)/ide.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/vga.c -o $(OBJ)/vga.o -I$(INCLUDE)
 	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/vesa.c -o $(OBJ)/vesa.o -I$(INCLUDE)
+	$(CC) -w $(C_FLAGS) $(SOURCE)/drivers/rtc.c -o $(OBJ)/rtc.o -I$(INCLUDE)
 
 gui:
 	$(CC) -w $(C_FLAGS) $(SOURCE)/gui/window.c -o $(OBJ)/window.o -I$(INCLUDE)
+	$(CC) -w $(C_FLAGS) $(SOURCE)/gui/button.c -o $(OBJ)/button.o -I$(INCLUDE)
+	$(CC) -w $(C_FLAGS) $(SOURCE)/gui/gui.c -o $(OBJ)/gui.o -I$(INCLUDE)
 
 link:
 	$(LD) $(LD_FLAGS) -T linker.ld -o $(BIN)/boot/boxos.bin $(ASM_OBJECTS) $(OBJECTS)

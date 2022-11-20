@@ -66,21 +66,26 @@ typedef struct
 }
 VBE20_MODEINFOBLOCK;
 
-uint32_t vbe_get_width(void);
-uint32_t vbe_get_height(void);
+uint32_t VBE_GetWidth(void);
+uint32_t VBE_GetHeight(void);
 
-int vesa_initialize(uint32_t width, uint32_t height, uint32_t bpp);
-uint32_t vbe_rgb(uint8_t red, uint8_t green, uint8_t blue);
-void vbe_putpixel(int x, int y, int color);
-uint32_t vbe_getpixel(int x, int y);
-void vbe_clear_backbuffer(void);
-void vbe_swapbuffers(void);
+uint32_t *VBE_GetBackBuffer(void);
+void VBE_ClearBackBuffer(void);
+void VBE_SwapBuffers(void);
 
-void vbe_set_background(int color);
-void vbe_draw_char(char ch, int x, int y, int color);
-void vbe_draw_string(const char *str, int x, int y, int color);
+void VBE_FreeBuffer(void);
 
-void vbe_draw_rect(int x, int y, int w, int h, int color);
-void vbe_fill_rect(int x, int y, int w, int h, int color);
+int VBE_InitializeBuffer(uint32_t width, uint32_t height, uint32_t bpp);
 
-#define VBE_RGB(r, g, b) vbe_rgb(r, g, b)
+void VBE_PutPixel(int x, int y, int color);
+uint32_t VBE_GetPixel(int x, int y);
+
+void VBE_SetBackground(int color);
+
+uint32_t VBE_RGB(uint8_t red, uint8_t green, uint8_t blue);
+
+void VBE_DrawChar(char ch, int x, int y, int color);
+void VBE_DrawString(const char *str, int x, int y, int color);
+
+void VBE_DrawRect(int x, int y, int w, int h, int color);
+void VBE_FillRect(int x, int y, int w, int h, int color);

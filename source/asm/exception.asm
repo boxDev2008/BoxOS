@@ -1,5 +1,5 @@
 section .text
-    extern isr_exception_handler
+    extern ISR_ExceptionHandler
     global exception_0
     global exception_1
     global exception_2
@@ -46,7 +46,7 @@ exception_handler:
     mov fs, ax
     mov gs, ax
 
-    call isr_exception_handler
+    call ISR_ExceptionHandler
 
     pop ebx             ; restore kernel data segment
     mov ds, bx

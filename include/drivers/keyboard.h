@@ -90,7 +90,4 @@
 #define SCAN_CODE_KEY_F11         0x57
 #define SCAN_CODE_KEY_F12         0x58
 
-void keyboard_initialize(void);
-
-char kb_getchar(void);
-char kb_get_scancode(void);
+void Keyboard_Initialize(void);

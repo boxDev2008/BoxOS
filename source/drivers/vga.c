@@ -24,17 +24,17 @@
 #define	VGA_NUM_REGS		(1 + VGA_NUM_SEQ_REGS + VGA_NUM_CRTC_REGS + \
 				VGA_NUM_GC_REGS + VGA_NUM_AC_REGS)
 
-uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) 
+uint8_t VGA_EntryColor(enum VGA_Color fg, enum VGA_Color bg) 
 {
 	return fg | bg << 4;
 }
 
-uint16_t vga_entry(unsigned char uc, uint8_t color) 
+uint16_t VGA_Entry(unsigned char uc, uint8_t color) 
 {
 	return (uint16_t) uc | (uint16_t) color << 8;
 }
 
-void vga_read_regs(unsigned char *regs)
+void VGA_ReadRegs(unsigned char *regs)
 {
 	unsigned i;
 
@@ -75,7 +75,7 @@ void vga_read_regs(unsigned char *regs)
 	outportb(VGA_AC_INDEX, 0x20);
 }
 
-void vga_write_regs(unsigned char *regs)
+void VGA_WriteRegs(unsigned char *regs)
 {
 	unsigned i;
 

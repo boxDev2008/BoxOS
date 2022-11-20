@@ -35,8 +35,8 @@ section .initial_stack, nobits
     align 4
 
 stack_bottom:
-    ; 1 MB of uninitialized data for stack
-    resb 8294400
+    ; 32 MB of uninitialized data for stack
+    resb 33177600
 stack_top:
 
 ; kernel entry, main text section

@@ -15,9 +15,9 @@
 #define ICW1            0x11
 #define ICW4_8086       0x01
 
-void pic8259_initialize(void);
+void PIC8259_Initialize(void);
 
-void pic8259_eoi(uint8_t irq);
+void PIC8259_Eoi(uint8_t irq);
 
 #endif
 

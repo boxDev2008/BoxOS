@@ -129,30 +129,6 @@ void strncat(char *dest, const char *src, int n)
     *end = '\0';
 }
 
-int isspace(char c)
-{
-    return c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r';
-}
-
-int isalpha(char c)
-{
-    return (((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z')));
-}
-
-char upper(char c)
-{
-    if ((c >= 'a') && (c <= 'z'))
-        return (c - 32);
-    return c;
-}
-
-char lower(char c)
-{
-    if ((c >= 'A') && (c <= 'Z'))
-        return (c + 32);
-    return c;
-}
-
 void itoa(char *buf, int base, int d)
 {
     char *p = buf;
@@ -224,4 +200,47 @@ void strreverse(char *s)
 		s[i] = s[j];
 		s[j] = c;
 	}
+}
+
+
+char *strtok(char *str, const char *delim)
+{
+    static char *temp_ptr = NULL;
+    char *final_ptr = NULL;
+
+    static int flag = 0;
+    int i, j;
+
+    if (delim == NULL)
+        return NULL;
+
+    if (flag == 1)
+        return NULL;
+
+    if (str != NULL)
+        temp_ptr = str; 
+
+    final_ptr = temp_ptr;
+
+    for (i = 0; i <= strlen(temp_ptr); i++)
+    {
+        for (j = 0; j < strlen(delim); j++)
+        {
+
+            if (temp_ptr[i] == '\0')
+            {
+                flag = 1;
+                return final_ptr;
+            }
+
+            if ((temp_ptr[i] == delim[j]))
+            {
+                temp_ptr[i] = '\0';
+                temp_ptr += i+1;
+                return final_ptr;
+            }
+        }
+    }
+
+    return NULL;
 }

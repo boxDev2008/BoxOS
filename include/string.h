@@ -6,8 +6,6 @@
 
 uint32_t digit_count(int num, int base);
 
-void kfree(void* memory);
-
 void *memset(void *dst, char c, uint32_t n);
 
 void *memcpy(void *dst, const void *src, uint32_t n);
@@ -30,12 +28,6 @@ void strncat(char *dest, const char *src, int n);
 
 uint32_t strsplit(char* str, char delim);
 
-int isspace(char c);
-
-int isalpha(char c);
-char upper(char c);
-char lower(char c);
-
 void itoa(char *buf, int base, int d);
 
 bool strprefix(const char *prefix, const char *str);
@@ -43,3 +35,5 @@ bool strprefix(const char *prefix, const char *str);
 uint8_t strbackspace(char *s, char c);
 
 void strreverse(char *s);
+
+char *strtok(char *str, const char *delim);

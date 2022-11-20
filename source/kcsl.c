@@ -13,51 +13,51 @@ typedef struct
     uint8_t color;
     uint16_t *buffer;
 }
-console_t;
+Console;
 
-console_t kcsl;
+Console kcsl;
 
-void kcsl_initialize(void)
+void Kcsl_Initialize(void)
 {
     kcsl.row = 0;
 	kcsl.column = 0;
 	kcsl.color = VGA_COLOR_LIGHT_GREY;
 	kcsl.buffer = (uint16_t*)0xB8000;
 
-    kcsl_clear();
+    Kcsl_Clear();
 }
 
-void kcsl_set_color(uint8_t color) 
+void Kcsl_SetColor(uint8_t color) 
 {
 	kcsl.color = color;
 }
 
-void kcsl_set_column(uint16_t column)
+void Kcsl_SetColumn(uint16_t column)
 {
     kcsl.column = column;
 }
 
-void kcsl_set_row(uint16_t row)
+void Kcsl_SetRow(uint16_t row)
 {
     kcsl.row = row;
 }
 
-uint8_t kcsl_get_color(void) 
+uint8_t Kcsl_GetColor(void) 
 {
     return kcsl.color;
 }
 
-uint16_t kcsl_get_column(void)
+uint16_t Kcsl_GetColumn(void)
 {
     return kcsl.column;
 }
 
-uint16_t kcsl_get_row(void)
+uint16_t Kcsl_GetRow(void)
 {
     return kcsl.row;
 }
 
-void kcsl_set_cursor_position(uint8_t x, uint8_t y)
+void Kcsl_SetCursorPosition(uint8_t x, uint8_t y)
 {
 	uint16_t pos = y * CONSOLE_WIDTH + x;
 
@@ -67,31 +67,31 @@ void kcsl_set_cursor_position(uint8_t x, uint8_t y)
 	outportb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
 }
 
-void kcsl_putentryat(char c, uint8_t color, uint16_t x, uint16_t y)
+void Kcsl_PutEntryAt(char c, uint8_t color, uint16_t x, uint16_t y)
 {
 	const uint32_t index = y * CONSOLE_WIDTH + x;
-	kcsl.buffer[index] = vga_entry(c, color);
+	kcsl.buffer[index] = VGA_Entry(c, color);
 }
 
-void kcsl_backspace(void)
+void Kcsl_Backspace(void)
 {
     kcsl.column--;
-    kcsl_putentryat(' ', vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK), kcsl.column, kcsl.row);
+    Kcsl_PutEntryAt(' ', VGA_EntryColor(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK), kcsl.column, kcsl.row);
 }
 
-void kcsl_clear(void)
+void Kcsl_Clear(void)
 {
     for (int i = 0; i < CONSOLE_SIZE; i++)
-        kcsl.buffer[i] = vga_entry(0x20, vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
+        kcsl.buffer[i] = VGA_Entry(0x20, VGA_EntryColor(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
 }
 
-void kcsl_scroll(void)
+void Kcsl_Scroll(void)
 {
     memmove(kcsl.buffer, kcsl.buffer + CONSOLE_WIDTH, CONSOLE_WIDTH * (CONSOLE_HEIGHT - 1) * sizeof(uint16_t));
 
     size_t index = (CONSOLE_HEIGHT - 1) * CONSOLE_WIDTH;
     for(size_t x = 0; x < CONSOLE_WIDTH; ++x)
-        kcsl.buffer[index + x] = vga_entry(' ', vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
+        kcsl.buffer[index + x] = VGA_Entry(' ', VGA_EntryColor(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
 }
 
 void kputchar(char ch)
@@ -103,7 +103,7 @@ void kputchar(char ch)
 
         if (kcsl.row >= CONSOLE_HEIGHT)
         {
-            kcsl_scroll();
+            Kcsl_Scroll();
 
             kcsl.column = 0;
             kcsl.row--;
@@ -114,13 +114,13 @@ void kputchar(char ch)
 
     if (kcsl.row >= CONSOLE_HEIGHT)
     {
-        kcsl_scroll();
+        Kcsl_Scroll();
 
 		kcsl.column = 0;
         kcsl.row--;
     }
 
-	kcsl_putentryat(ch, vga_entry_color(kcsl.color, VGA_COLOR_BLACK), kcsl.column, kcsl.row);
+	Kcsl_PutEntryAt(ch, VGA_EntryColor(kcsl.color, VGA_COLOR_BLACK), kcsl.column, kcsl.row);
 
 	if (++kcsl.column == CONSOLE_WIDTH)
     {

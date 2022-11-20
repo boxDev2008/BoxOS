@@ -4,7 +4,7 @@
 
 #include <io_ports.h>
 
-void pic8259_initialize(void)
+void PIC8259_Initialize(void)
 {
     uint8_t a1, a2;
     
@@ -27,7 +27,7 @@ void pic8259_initialize(void)
     outportb(PIC2_DATA, a2);
 }
 
-void pic8259_eoi(uint8_t irq)
+void PIC8259_Eoi(uint8_t irq)
 {
     if(irq >= 0x28)
         outportb(PIC2, PIC_EOI);

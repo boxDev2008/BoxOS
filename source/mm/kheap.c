@@ -1,29 +1,26 @@
 #include <mm/dalloc.h>
 
-#define HEAP_SIZE 1048576
+#define HEAP_SIZE 1048576 * 16
 
 uint8_t heap_array[HEAP_SIZE];
 heap_t heap;
 
-void kheap_initialize(void)
+void Kheap_Initialize(void)
 {
     heap_init(&heap, (void*)heap_array, HEAP_SIZE);
 }
 
-void *kmalloc(size_t size)
+void kmalloc(size_t size, void **ptr)
 {
-    void *ptr = NULL;
-    dalloc(&heap, size, (void**)&ptr);
-    return ptr;
+    dalloc(&heap, size, ptr);
 }
 
-void *krealloc(void *ptr, size_t size)
+void krealloc(size_t size, void **ptr)
 {
-    dalloc(&heap, size, (void**)&ptr);
-    return ptr;
+    drealloc(&heap, size, ptr);
 }
 
-void kfree(void *ptr)
+void kfree(void **ptr)
 {
-    dfree(&heap, (void**)&ptr, USING_PTR_ADDRESS);
+    dfree(&heap, ptr, USING_PTR_ADDRESS);
 }

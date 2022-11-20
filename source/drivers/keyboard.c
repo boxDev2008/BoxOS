@@ -16,7 +16,7 @@ bool g_shift_pressed, g_capslocked;
 
 #define KEYBOARD_USE_CAPS ((g_shift_pressed && !g_capslocked) || (!g_shift_pressed && g_capslocked))
 
-char keyboard_scancode_to_char(uint8_t scancode, bool shift_pressed, bool capslocked)
+char Keyboard_ScancodeToChar(uint8_t scancode)
 {
     switch (scancode)
     {
@@ -72,7 +72,7 @@ char keyboard_scancode_to_char(uint8_t scancode, bool shift_pressed, bool capslo
     return NULL;
 }
 
-void keyboard_handler(registers_t *regs)
+void Keyboard_Handler(Registers *regs)
 {
     uint8_t scancode = inportb(KEYBOARD_DATA_PORT);
 
@@ -99,24 +99,26 @@ void keyboard_handler(registers_t *regs)
         break;
 
     case SCAN_CODE_KEY_BACKSPACE:
-        kshell_backspace();
+        //Kshell_Backspace();
         break;
 
     case SCAN_CODE_KEY_ENTER:
-        kshell_execute_command();
+        //Kshell_ExecuteCurrentCommand();
         break;
     
     default:
-        char ch = keyboard_scancode_to_char(scancode, g_shift_pressed, g_capslocked);
-        if (ch != NULL)
         {
-            kshell_write_char(ch);
+            /*char ch = Keyboard_ScancodeToChar(scancode, g_shift_pressed, g_capslocked);
+            if (ch != NULL)
+            {
+                Kshell_WriteChar(ch);
+            }
+            break;*/
         }
-        break;
     }
 }
 
-void keyboard_initialize(void)
+void Keyboard_Initialize(void)
 {
-    isr_register_interrupt_handler(IRQ_BASE + IRQ1_KEYBOARD, keyboard_handler);
+    ISR_RegisterInterruptHandler(IRQ_BASE + IRQ1_KEYBOARD, Keyboard_Handler);
 }

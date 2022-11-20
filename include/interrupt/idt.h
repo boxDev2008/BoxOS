@@ -12,17 +12,17 @@ typedef struct
     uint8_t type;
     uint16_t base_high;
 }
-__attribute__((packed)) idt_t;
+__attribute__((packed)) IDT;
 
 typedef struct
 {
     uint16_t limit;
     uint32_t base_address;
 }
-__attribute__((packed)) idt_ptr_t;
+__attribute__((packed)) IDT_PTR;
 
-extern void load_idt(uint32_t idt_ptr);
+extern void IDT_Load(uint32_t idt_ptr);
 
-void idt_set_entry(int index, uint32_t base, uint16_t seg_sel, uint8_t flags);
+void IDT_SetEntry(int index, uint32_t base, uint16_t seg_sel, uint8_t flags);
 
-void idt_initialize(void);
+void IDT_Initialize(void);

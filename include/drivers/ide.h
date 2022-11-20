@@ -10,7 +10,7 @@ typedef struct
     uint16_t bm_ide; // bus-master ide port
     uint16_t no_intr; // no interrupt port
 }
-ide_channels_t;
+IDE_Channels;
 
 typedef struct
 {
@@ -24,7 +24,7 @@ typedef struct
     uint32_t size; // drive size in sectors
     unsigned char model[41]; // drive name
 }
-ide_device_t;
+IDE_Device;
 
 #define MAXIMUM_CHANNELS    2
 #define MAXIMUM_IDE_DEVICES    5
@@ -124,21 +124,21 @@ sec_channel_base_addr: Secondary channel base address(0x170-0x177)
 sec_channel_control_addr: Secondary channel control base address(0x376)
 bus_master_addr: Bus master address(pass 0 for now)
 */
-void ide_initialize(uint32_t prim_channel_base_addr, uint32_t prim_channel_control_base_addr,
+void IDE_Initialize(uint32_t prim_channel_base_addr, uint32_t prim_channel_control_base_addr,
             uint32_t sec_channel_base_addr, uint32_t sec_channel_control_addr,
             uint32_t bus_master_addr);
 
-void ide_print_drive_info(void);
+void IDE_PrintDriveInfo(void);
 
-void ide_wait_irq(void);
-void ide_irq(void);
-
-// start from lba = 0
-int ide_read_sectors(uint8_t drive, uint8_t num_sectors, uint32_t lba, uint32_t buffer);
+void IDE_WaitIRQ(void);
+void IDE_IRQ(void);
 
 // start from lba = 0
-int ide_write_sectors(uint8_t drive, uint8_t num_sectors, uint32_t lba, uint32_t buffer);
+int IDE_ReadSectors(uint8_t drive, uint8_t num_sectors, uint32_t lba, uint32_t buffer);
+
+// start from lba = 0
+int IDE_WriteSectors(uint8_t drive, uint8_t num_sectors, uint32_t lba, uint32_t buffer);
 
 
-void ata_initialize(void);
-int ata_get_drive_by_model(const char *model);
+void ATA_Initialize(void);
+int ATA_GetDriveByModel(const char *model);

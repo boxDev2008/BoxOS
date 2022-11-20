@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-enum vga_color
+enum VGA_Color
 {
 	VGA_COLOR_BLACK = 0,
 	VGA_COLOR_BLUE = 1,
@@ -22,8 +22,8 @@ enum vga_color
 	VGA_COLOR_WHITE = 15,
 };
 
-uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg);
-uint16_t vga_entry(unsigned char uc, uint8_t color);
+uint8_t VGA_EntryColor(enum VGA_Color fg, enum VGA_Color bg);
+uint16_t VGA_Entry(unsigned char uc, uint8_t color);
 
-void vga_read_regs(unsigned char *regs);
-void vga_write_regs(unsigned char *regs);
+void VGA_ReadRegs(unsigned char *regs);
+void VGA_WriteRegs(unsigned char *regs);

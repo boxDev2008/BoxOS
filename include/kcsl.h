@@ -2,22 +2,22 @@
 
 #include <stdint.h>
 
-void kcsl_initialize(void);
+void Kcsl_Initialize(void);
 
-void kcsl_set_color(uint8_t color);
-void kcsl_set_column(uint16_t column);
-void kcsl_set_row(uint16_t row);
+void Kcsl_SetColor(uint8_t color);
+void Kcsl_SetColumn(uint16_t column);
+void Kcsl_SetRow(uint16_t row);
 
-uint8_t kcsl_get_color(void);
-uint16_t kcsl_get_column(void);
-uint16_t kcsl_get_row(void);
+uint8_t Kcsl_GetColor(void);
+uint16_t Kcsl_GetColumn(void);
+uint16_t Kcsl_GetRow(void);
 
-void kcsl_set_cursor_position(uint8_t x, uint8_t y);
+void Kcsl_SetCursorPosition(uint8_t x, uint8_t y);
 
-void kcsl_putentryat(char c, uint8_t color, uint16_t x, uint16_t y);
-void kcsl_backspace(void);
-void kcsl_clear(void);
-void kcsl_scroll(void);
+void Kcsl_PutEntryAt(char c, uint8_t color, uint16_t x, uint16_t y);
+void Kcsl_Backspace(void);
+void Kcsl_Clear(void);
+void Kcsl_Scroll(void);
 
 void kputchar(char c);
 void kprintf(const char *format, ...);

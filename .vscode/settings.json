@@ -19,6 +19,19 @@
         "fonts.h": "c",
         "bitmap.h": "c",
         "wallpaper.h": "c",
-        "vga.h": "c"
+        "vga.h": "c",
+        "stdbool.h": "c",
+        "rtc.h": "c",
+        "pit.h": "c",
+        "stb_image.h": "c",
+        "xstring": "c",
+        "xutility": "c",
+        "window.h": "c",
+        "curosr.h": "c",
+        "gui.h": "c",
+        "stddef.h": "c",
+        "button.h": "c",
+        "colors.h": "c",
+        "cstring": "c"
     }
 }

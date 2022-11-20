@@ -1,4 +1,5 @@
 #include <drivers/mouse.h>
+#include <drivers/vesa.h>
 
 #include <interrupt/8259_pic.h>
 #include <interrupt/idt.h>
@@ -12,19 +13,19 @@ float g_mouse_x_pos = 0, g_mouse_y_pos = 0;
 float mouse_speed = 6;
 uint32_t under_mouse_buffer = NULL;
 
-mouse_status_t g_status;
+MouseStatus g_status;
 
-int mouse_get_x(void)
+int Mouse_GetX(void)
 {
     return g_mouse_x_pos;
 }
 
-int mouse_get_y(void)
+int Mouse_GetY(void)
 {
     return g_mouse_y_pos;
 }
 
-mouse_status_t mouse_get_status(void)
+MouseStatus Mouse_GetStatus(void)
 {
     return g_status;
 }
@@ -64,9 +65,9 @@ uint8_t mouse_read(void)
     return inportb(MOUSE_DATA_PORT);
 }
 
-void get_mouse_status(char status_byte, mouse_status_t *status) 
+void get_mouse_status(char status_byte, MouseStatus *status) 
 {
-    memset(status, 0, sizeof(mouse_status_t));
+    memset(status, 0, sizeof(MouseStatus));
     if (status_byte & 0x01)
         status->left_button = 1;
     if (status_byte & 0x02)
@@ -96,7 +97,7 @@ void print_mouse_info(void)
         kprintf("Middle button clicked");
 }
 
-void mouse_handler(registers_t *regs)
+void mouse_handler(Registers *regs)
 {
     static uint8_t mouse_cycle = 0;
     float prev_mouse_x_pos = g_mouse_x_pos, prev_mouse_y_pos = g_mouse_y_pos;
@@ -123,17 +124,15 @@ void mouse_handler(registers_t *regs)
             if (g_mouse_y_pos < 0)
                 g_mouse_y_pos = 0;
 
-            
-
-            if (g_mouse_x_pos > (int)1280)
-                g_mouse_x_pos = (int)1280 - 1;
-            if (g_mouse_y_pos > (int)1024)
-                g_mouse_y_pos = (int)1024 - 1;
+            if (g_mouse_x_pos > (int)VBE_GetWidth())
+                g_mouse_x_pos = (int)VBE_GetWidth() - 1;
+            if (g_mouse_y_pos > (int)VBE_GetHeight())
+                g_mouse_y_pos = (int)VBE_GetHeight() - 1;
             
             mouse_cycle = 0;
             break;
     }
-    isr_end_interrupt(IRQ_BASE + 12);
+    ISR_EndInterrupt(IRQ_BASE + 12);
 }
 
 // Available rates are 10, 20, 40, 60, 80, 100, 200
@@ -157,7 +156,7 @@ void set_mouse_rate(uint8_t rate)
     }
 }
 
-void mouse_initialize(void)
+void Mouse_Initialize(void)
 {
     uint8_t status;
 
@@ -199,5 +198,5 @@ void mouse_initialize(void)
         return;
     }
 
-    isr_register_interrupt_handler(IRQ_BASE + IRQ12_AUXILIARY, mouse_handler);
+    ISR_RegisterInterruptHandler(IRQ_BASE + IRQ12_AUXILIARY, mouse_handler);
 }
